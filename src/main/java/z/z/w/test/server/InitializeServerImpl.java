@@ -11,11 +11,8 @@ package z.z.w.test.server;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.context.ApplicationContext;
 
-import javax.annotation.Resource;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -31,23 +28,10 @@ import static z.z.w.test.util.PropertiesUtils.INSTANCE;
  *      History:
  * </pre>
  **************************************************************************/
-@Controller
-public class InitializeServerImpl implements IServiceLoader,InitializingBean {
+public class InitializeServerImpl implements IServiceLoader  {
 
     final static Logger logger = LoggerFactory.getLogger(InitializeServerImpl.class);
     final static String RELATIVE_PATH = "pro/services.properties";
-
-    public WebApplicationContext getWebApplicationContext() {
-        return webApplicationContext;
-    }
-
-    @Resource
-    public void setWebApplicationContext(WebApplicationContext webApplicationContext) {
-        this.webApplicationContext = webApplicationContext;
-    }
-
-    private WebApplicationContext webApplicationContext;
-
     @Override
     public void destroy() {
 
@@ -55,7 +39,7 @@ public class InitializeServerImpl implements IServiceLoader,InitializingBean {
     }
 
     @Override
-    public void loadService() {
+    public void loadService(ApplicationContext webApplicationContext) {
         logger.info("Starting initialize beans service.....");
         logger.info("======>>>>{}.",webApplicationContext);
         try {
@@ -84,8 +68,8 @@ public class InitializeServerImpl implements IServiceLoader,InitializingBean {
         logger.info("Loaded initialize beans service.");
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        loadService();
-    }
+//    @Override
+//    public void afterPropertiesSet() throws Exception {
+//        loadService();
+//    }
 }

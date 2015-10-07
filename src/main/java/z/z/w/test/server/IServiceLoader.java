@@ -8,6 +8,8 @@
 
 package z.z.w.test.server;
 
+import org.springframework.context.ApplicationContext;
+
 /**************************************************************************
  * <pre>
  *     FileName: z.z.w.test.server.IServiceLoader
@@ -21,5 +23,5 @@ package z.z.w.test.server;
 public interface IServiceLoader {
     void destroy();
 
-    void loadService();
+    void loadService(ApplicationContext applicationContext);
 }
