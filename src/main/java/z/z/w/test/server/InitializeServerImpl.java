@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
 
 import java.util.Enumeration;
 import java.util.Properties;
@@ -28,6 +29,7 @@ import static z.z.w.test.util.PropertiesUtils.INSTANCE;
  *      History:
  * </pre>
  **************************************************************************/
+@Service
 public class InitializeServerImpl implements IServiceLoader  {
 
     final static Logger logger = LoggerFactory.getLogger(InitializeServerImpl.class);

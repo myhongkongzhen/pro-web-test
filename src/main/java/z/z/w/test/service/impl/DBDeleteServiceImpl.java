@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import z.z.w.test.service.IService;
 
+import javax.annotation.Resource;
+
 /**************************************************************************
  * <pre>
  *     FileName: z.z.w.test.service.impl.DBDeleteServiceImpl
@@ -22,25 +24,41 @@ import z.z.w.test.service.IService;
  *      History:
  * </pre>
  **************************************************************************/
-//@Service
-public class DBDeleteServiceImpl implements IService {
+public class DBDeleteServiceImpl implements IService
+{
 
-    final static Logger logger = LoggerFactory.getLogger(DBDeleteServiceImpl.class);
+	final static Logger logger = LoggerFactory.getLogger( DBDeleteServiceImpl.class );
+	private TestAnnServiceImpl testAnnServiceImpl;
 
+	@Override /*@Scheduled( fixedDelay = 3000 ) */ public void execute() throws Exception
+	{
+		logger.info( "開始刪除數據庫數據..." );
+		logger.info( "==={}.....", testAnnServiceImpl );
+		Thread.sleep( 1000 );
+		testAnnServiceImpl.execute();
+		testAnnServiceImpl.taskList();
+		logger.info( "刪除數據操作完成...." );
+	}
 
-    @Override
-    public void execute() throws Exception {
-        logger.info("開始刪除數據庫數據...");
-        Thread.sleep(1000);
-        logger.info("刪除數據操作完成....");
-    }
+	@Override public void run()
+	{
+		try
+		{
+			execute();
+		}
+		catch ( Exception e )
+		{
+			logger.error( "刪除數據出错:" + e.getMessage(), e );
+		}
+	}
 
-    @Override
-    public void run() {
-        try {
-            execute();
-        } catch (Exception e) {
-            logger.error("刪除數據出错:" + e.getMessage(), e);
-        }
-    }
+	public TestAnnServiceImpl getTestAnnServiceImpl()
+	{
+		return testAnnServiceImpl;
+	}
+
+	@Resource public void setTestAnnServiceImpl( TestAnnServiceImpl testAnnServiceImpl )
+	{
+		this.testAnnServiceImpl = testAnnServiceImpl;
+	}
 }

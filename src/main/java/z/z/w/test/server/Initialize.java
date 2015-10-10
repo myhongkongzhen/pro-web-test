@@ -12,9 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.context.WebApplicationContext;
 
-import javax.annotation.Resource;
 import java.util.ServiceLoader;
 
 /**************************************************************************
@@ -31,24 +29,25 @@ import java.util.ServiceLoader;
 public class Initialize implements InitializingBean {
     final static Logger logger = LoggerFactory.getLogger(Initialize.class);
 
-    public WebApplicationContext getWebApplicationContext() {
-        return webApplicationContext;
-    }
-
-    @Resource
-    public void setWebApplicationContext(WebApplicationContext webApplicationContext) {
-        this.webApplicationContext = webApplicationContext;
-    }
-
-    private WebApplicationContext webApplicationContext;
+//    public WebApplicationContext getWebApplicationContext() {
+//        return webApplicationContext;
+//    }
+//
+//    @Resource
+//    public void setWebApplicationContext(WebApplicationContext webApplicationContext) {
+//        this.webApplicationContext = webApplicationContext;
+//    }
+//
+//    private WebApplicationContext webApplicationContext;
 
     @Override
     public void afterPropertiesSet() throws Exception {
         final ServiceLoader<IServiceLoader> loader = ServiceLoader.load(IServiceLoader.class);
 
-        logger.debug("Service will be starting...");
-        for (IServiceLoader service : loader)
-            service.loadService(webApplicationContext);
-        logger.debug("Service is started!");
+//        logger.debug("Service will be starting...");
+//        for (IServiceLoader service : loader)
+//            service.loadService(webApplicationContext);
+//        logger.debug("Service is started!");
+
     }
 }

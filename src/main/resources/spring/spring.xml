@@ -13,5 +13,5 @@
 
     <import resource="spring-base.xml"/>
     <import resource="spring-web.xml"/>
-    <import resource="spring-server.xml"/>
+    <import resource="spring-task.xml"/>
 </beans>
