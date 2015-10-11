@@ -8,6 +8,8 @@
 
 package z.z.w.test.service;
 
+import java.util.concurrent.Future;
+
 /**************************************************************************
  * <pre>
  *     FileName: z.z.w.test.service.IService
@@ -20,4 +22,6 @@ package z.z.w.test.service;
  **************************************************************************/
 public interface IService extends Runnable {
      void execute() throws Exception;
+
+     Future<String> aysnFuter() throws  Exception;
 }

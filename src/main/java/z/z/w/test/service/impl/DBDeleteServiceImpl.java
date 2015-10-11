@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import z.z.w.test.service.IService;
 
 import javax.annotation.Resource;
+import java.util.concurrent.Future;
 
 /**************************************************************************
  * <pre>
@@ -28,17 +29,36 @@ public class DBDeleteServiceImpl implements IService
 {
 
 	final static Logger logger = LoggerFactory.getLogger( DBDeleteServiceImpl.class );
-	private TestAnnServiceImpl testAnnServiceImpl;
+	private IService testAnnServiceImpl;
 
 	@Override /*@Scheduled( fixedDelay = 3000 ) */ public void execute() throws Exception
 	{
 		logger.info( "開始刪除數據庫數據..." );
 		logger.info( "==={}.....", testAnnServiceImpl );
-		Thread.sleep( 1000 );
 		testAnnServiceImpl.execute();
-		testAnnServiceImpl.taskList();
 		logger.info( "刪除數據操作完成...." );
 	}
+
+	@Override
+	public Future<String> aysnFuter() throws Exception {
+
+		logger.info( "開始aysnFuter刪除數據庫數據..." );
+		Future<String>  future = testAnnServiceImpl.aysnFuter();
+
+		while (true) {  ///这里使用了循环判断，等待获取结果信息
+			if (future.isDone()) {  //判断是否执行完毕
+				logger.info("Result from asynchronous process - " + future.get());
+				break;
+			}
+			logger.info("Continue doing something else. ");
+			Thread.sleep(1000);
+		}
+
+		logger.info( "刪除aysnFuter數據操作完成...." );
+
+		return null;
+	}
+
 
 	@Override public void run()
 	{
@@ -52,13 +72,12 @@ public class DBDeleteServiceImpl implements IService
 		}
 	}
 
-	public TestAnnServiceImpl getTestAnnServiceImpl()
-	{
+	public IService getTestAnnServiceImpl() {
 		return testAnnServiceImpl;
 	}
 
-	@Resource public void setTestAnnServiceImpl( TestAnnServiceImpl testAnnServiceImpl )
-	{
+	@Resource
+	public void setTestAnnServiceImpl(IService testAnnServiceImpl) {
 		this.testAnnServiceImpl = testAnnServiceImpl;
 	}
 }

@@ -8,10 +8,11 @@
 
 package z.z.w.test.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import z.z.w.test.service.IBussOper;
-import z.z.w.test.service.IService;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
+import org.springframework.stereotype.Service;
+
+import java.util.concurrent.Future;
 
 /*********************************************************************************************
  * <pre>
@@ -23,32 +24,47 @@ import z.z.w.test.service.IService;
  *      History:
  * </pre>
  *********************************************************************************************/
-public class TestAnnServiceImpl implements IBussOper, IService
-{
-	Logger logger = LoggerFactory.getLogger( TestAnnServiceImpl.class );
+@Service
+public class TestAnnServiceImpl extends TestAnnServiceFactory {
 
-	@Override public void taskList()
-	{
-		logger.info( "taskList....." );
-	}
 
-	@Override public void execute() throws Exception
-	{
-		logger.info( "execute...." );
-	}
+    @Override
+    public void taskList() {
+        logger.info("taskList.....");
+    }
 
-	/**
-	 * When an object implementing interface <code>Runnable</code> is used
-	 * to create a thread, starting the thread causes the object's
-	 * <code>run</code> method to be called in that separately executing
-	 * thread.
-	 * The general contract of the method <code>run</code> is that it may
-	 * take any action whatsoever.
-	 *
-	 * @see Thread#run()
-	 */
-	@Override public void run()
-	{
+    @Async
+    @Override
+    public void execute() throws Exception {
+        logger.info("execute....");
+        Thread.sleep(4000);
+        taskList();
+        logger.info("execute........end.....");
+    }
 
-	}
+    @Async
+    @Override
+    public Future<String> aysnFuter() throws Exception {
+        logger.info("aysnFuter....");
+        Thread.sleep(5000);
+        taskList();
+        logger.info("aysnFuter........end.....");
+
+        return new AsyncResult<String>("OKKKKKKKKKKKKK");
+    }
+
+    /**
+     * When an object implementing interface <code>Runnable</code> is used
+     * to create a thread, starting the thread causes the object's
+     * <code>run</code> method to be called in that separately executing
+     * thread.
+     * The general contract of the method <code>run</code> is that it may
+     * take any action whatsoever.
+     *
+     * @see Thread#run()
+     */
+    @Override
+    public void run() {
+
+    }
 }
